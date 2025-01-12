@@ -16,13 +16,11 @@ def check_kindle_unlimited(driver, search_url):
         
         # Optional: Wait for the page to load completely
         time.sleep(random.uniform(2, 4))  # Adjust as needed
+        print(driver.page_source[:2000])
+        # Look for a <span> with id="kuMessageForMembers"
+        spans = driver.find_elements(By.ID, "kuMessageForMembers")
 
-        # Look for an <img> with alt="Kindle Unlimited"
-        # Using XPath to find the image
-        # Adjust the XPath if necessary based on Amazon's HTML structure
-        images = driver.find_elements(By.XPATH, "//img[@alt='Kindle Unlimited']")
-
-        if images:
+        if spans:
             return "Available"
         else:
             return "Not Available"
@@ -30,6 +28,7 @@ def check_kindle_unlimited(driver, search_url):
     except Exception as e:
         print(f"Error checking URL {search_url}: {e}")
         return "I am a muppet"
+
 
 def main():
     # Initialize Selenium WebDriver with WebDriver Manager
